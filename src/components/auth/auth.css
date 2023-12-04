@@ -4,8 +4,74 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  column-gap: 5rem;
 }
 
+.auth h1 {
+  font-size: 8rem;
+  color: white;
+}
+.auth-logo p {
+  font-size: 1.5rem;
+  color: white;
+}
+.form p {
+  color: white;
+}
+.form label {
+  font-size: 0.8rem;
+}
 .auth button {
   padding: 1rem 2rem;
+}
+
+.auth .form {
+  display: flex;
+  flex-direction: column;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 2rem;
+}
+
+.auth .form input {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  margin-top: 10px;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  border: none;
+}
+
+.auth .form input[type="button"] {
+  background-color: black;
+  color: white;
+}
+
+.auth .form h2 {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+span {
+  cursor: pointer;
+  color: rgb(0, 255, 149);
+  transition: 0.3s;
+}
+span:hover {
+  color: red;
+}
+
+@media screen and (max-width: 800px) {
+  .auth-logo {
+    text-align: center;
+  }
+  .auth h1 {
+    font-size: 4rem;
+  }
 }

@@ -1,0 +1,28 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: white;
+  padding: 1rem 3rem;
+}
+
+.nav-prof {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.nav-prof:hover {
+  color: red;
+}
+.navbar .nav-drop {
+  position: absolute;
+  top: 50px;
+  background-color: white;
+  width: 9rem;
+  overflow: hidden;
+  transition: 0.5s;
+  color: black;
+}

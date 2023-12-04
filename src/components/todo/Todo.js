@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   onTasksSnapshot,
   createTask,
   deleteTask,
-} from '../../firebase/firebase';
+} from "../../firebase/firebase";
+
+import "./todo.css";
+import Navbar from "../navbar/Navbar";
 
 export default function Todo({ user, logout }) {
   const [tasks, setTasks] = useState([]);
@@ -24,11 +27,8 @@ export default function Todo({ user, logout }) {
   }, [user.uid]);
 
   return (
-    <div>
-      <h1>{user.name}</h1>
-      <p>{user.email}</p>
-      <img src={user.photo} alt="profile" />
-      <button onClick={logout}>Logout</button>
+    <div className="Todo">
+      <Navbar user={user} logout={logout} />
       <TaskForm handleAdd={handleAdd} />
       <TaskList tasks={tasks} handleRemove={handleRemove} />
     </div>
@@ -37,13 +37,10 @@ export default function Todo({ user, logout }) {
 
 function TaskList({ tasks, handleRemove }) {
   return (
-    <div>
+    <div className="task-list">
       {tasks.length > 0 ? (
         tasks.map((task, index) => (
-          <div key={index}>
-            <p>Task: {task.text}</p>
-            <button onClick={() => handleRemove(task.id)}>Remove</button>
-          </div>
+          <Task task={task} key={index} handleRemove={handleRemove} />
         ))
       ) : (
         <p>No Task</p>
@@ -53,16 +50,16 @@ function TaskList({ tasks, handleRemove }) {
 }
 
 function TaskForm({ handleAdd }) {
-  const [newTask, setNewtask] = useState('');
+  const [newTask, setNewtask] = useState("");
 
   const addTask = () => {
     if (newTask.length <= 3) return;
     handleAdd(newTask);
-    setNewtask('');
+    setNewtask("");
   };
 
   return (
-    <div className="taskform">
+    <div className="task-form">
       <input
         type="text"
         placeholder="Enter Task"
@@ -70,6 +67,15 @@ function TaskForm({ handleAdd }) {
         value={newTask}
       />
       <button onClick={addTask}>Add</button>
+    </div>
+  );
+}
+
+function Task({ task, handleRemove }) {
+  return (
+    <div>
+      <p>Task: {task.text}</p>
+      <button onClick={() => handleRemove(task.id)}>Remove</button>
     </div>
   );
 }

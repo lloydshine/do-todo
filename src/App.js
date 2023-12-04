@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Todo, Auth } from './components';
-import { auth } from './firebase/firebase';
+import { useEffect, useState } from "react";
+import { Todo, Auth } from "./components";
+import { auth } from "./firebase/firebase";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -17,12 +17,12 @@ const App = () => {
     try {
       await auth.signOut();
     } catch (error) {
-      console.error('Error logging out:', error.message);
+      console.error("Error logging out:", error.message);
     }
   };
 
   return (
-    <div>
+    <div className="App">
       {user ? <Todo user={user} logout={logout} /> : <Auth setUser={setUser} />}
     </div>
   );

@@ -1,10 +1,10 @@
-import { initializeApp } from 'firebase/app';
-import { v4 as uuidv4 } from 'uuid'; // Import the uuid library
+import { initializeApp } from "firebase/app";
+import { v4 as uuidv4 } from "uuid"; // Import the uuid library
 import {
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-} from 'firebase/auth';
+} from "firebase/auth";
 import {
   getFirestore,
   collection,
@@ -14,18 +14,18 @@ import {
   getDoc,
   setDoc,
   Timestamp,
-} from 'firebase/firestore';
+} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE,
-  authDomain: 'do-todo-cd49a.firebaseapp.com',
-  projectId: 'do-todo-cd49a',
-  storageBucket: 'do-todo-cd49a.appspot.com',
-  messagingSenderId: '847231757850',
-  appId: '1:847231757850:web:d0d5faa820d3bbeba6aba3',
-  measurementId: 'G-505RNFHC6Y',
+  authDomain: "do-todo-cd49a.firebaseapp.com",
+  projectId: "do-todo-cd49a",
+  storageBucket: "do-todo-cd49a.appspot.com",
+  messagingSenderId: "847231757850",
+  appId: "1:847231757850:web:d0d5faa820d3bbeba6aba3",
+  measurementId: "G-505RNFHC6Y",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -41,9 +41,9 @@ export const loginWithEmailAndPassword = async (email, password) => {
       password
     );
     const user = userCredential.user;
-    console.log('User logged in successfully:', user.uid);
+    console.log("User logged in successfully:", user.uid);
   } catch (error) {
-    console.error('Error logging in:', error.message);
+    console.error("Error logging in:", error.message);
   }
 };
 
@@ -55,16 +55,15 @@ export const registerWithEmailAndPassword = async (email, password) => {
       password
     );
     const user = userCredential.user;
-    console.log('User registered successfully:', user.uid);
+    console.log("User registered successfully:", user.uid);
     return user;
   } catch (error) {
-    console.error('Error registering user:', error.message);
-    throw error;
+    console.error("Error registering user:", error.message);
   }
 };
 
 export const onTasksSnapshot = (userId, setTasks) => {
-  const userTasksRef = doc(collection(db, 'tasks'), userId);
+  const userTasksRef = doc(collection(db, "tasks"), userId);
   const unsubscribe = onSnapshot(userTasksRef, (docSnapshot) => {
     if (docSnapshot.exists()) {
       const userData = docSnapshot.data();
@@ -81,7 +80,7 @@ export const onTasksSnapshot = (userId, setTasks) => {
 
 export const createTask = async (userId, task) => {
   try {
-    const userTasksRef = doc(collection(db, 'tasks'), userId);
+    const userTasksRef = doc(collection(db, "tasks"), userId);
     const docSnapshot = await getDoc(userTasksRef);
     const newTask = {
       id: uuidv4(),
@@ -97,15 +96,15 @@ export const createTask = async (userId, task) => {
     } else {
       await setDoc(userTasksRef, { tasks: [newTask] });
     }
-    console.log('Task created successfully!');
+    console.log("Task created successfully!");
   } catch (error) {
-    console.error('Error creating task:', error);
+    console.error("Error creating task:", error);
   }
 };
 
 export const deleteTask = async (userId, taskId) => {
   try {
-    const userTasksRef = doc(collection(db, 'tasks'), userId);
+    const userTasksRef = doc(collection(db, "tasks"), userId);
     const docSnapshot = await getDoc(userTasksRef);
     if (docSnapshot.exists()) {
       const updatedTasks = docSnapshot
@@ -113,11 +112,11 @@ export const deleteTask = async (userId, taskId) => {
         .tasks.filter((task) => task.id !== taskId);
       // Update the document with the filtered tasks
       await updateDoc(userTasksRef, { tasks: updatedTasks });
-      console.log('Task deleted successfully!');
+      console.log("Task deleted successfully!");
     } else {
-      console.error('User document not found.');
+      console.error("User document not found.");
     }
   } catch (error) {
-    console.error('Error deleting task:', error);
+    console.error("Error deleting task:", error);
   }
 };
