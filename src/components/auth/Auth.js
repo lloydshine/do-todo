@@ -62,6 +62,7 @@ function Register({ handleSwitch }) {
   const [password, setPassword] = useState('');
   const [retypePassword, setRetypePassword] = useState('');
   const handleRegister = () => {
+    if (password !== retypePassword) return;
     registerWithEmailAndPassword(email, password);
     handleSwitch(true);
   };
