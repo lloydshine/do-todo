@@ -1,20 +1,25 @@
-import { useEffect, useState } from "react";
-import { Todo, Auth } from "./components";
+import { useEffect, useState } from 'react';
+import { Todo, Auth } from './components';
+import { auth } from './firebase/firebase';
 
 const App = () => {
   const [user, setUser] = useState(null);
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
-  };
-
   useEffect(() => {
-    const u = localStorage.getItem("user");
-    if (u) {
-      setUser(JSON.parse(u));
-    }
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    // Cleanup the subscription when the component unmounts
+    return () => unsubscribe();
   }, []);
+
+  const logout = async () => {
+    try {
+      await auth.signOut();
+    } catch (error) {
+      console.error('Error logging out:', error.message);
+    }
+  };
 
   return (
     <div>
