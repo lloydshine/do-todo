@@ -3,9 +3,11 @@ import {
   onTasksSnapshot,
   createTask,
   deleteTask,
+  updateTask,
 } from "../../firebase/firebase";
+import toast from "react-hot-toast";
 
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaCheck, FaDotCircle } from "react-icons/fa";
 
 import "./todo.css";
 import Navbar from "../navbar/Navbar";
@@ -14,11 +16,17 @@ export default function Todo({ user, logout }) {
   const [tasks, setTasks] = useState([]);
 
   const handleAdd = (newTask) => {
+    toast.success("Added new Task!");
     createTask(user.uid, newTask);
   };
 
   const handleRemove = (taskId) => {
+    toast.error("Removed a Task!");
     deleteTask(user.uid, taskId);
+  };
+  const handleUpdate = (taskId, isDone) => {
+    toast.success("Updated a Tasks!");
+    updateTask(user.uid, taskId, { is_done: isDone });
   };
 
   useEffect(() => {
@@ -32,17 +40,26 @@ export default function Todo({ user, logout }) {
     <div className="Todo">
       <Navbar user={user} logout={logout} />
       <TaskForm handleAdd={handleAdd} />
-      <TaskList tasks={tasks} handleRemove={handleRemove} />
+      <TaskList
+        tasks={tasks}
+        handleRemove={handleRemove}
+        handleUpdate={handleUpdate}
+      />
     </div>
   );
 }
 
-function TaskList({ tasks, handleRemove }) {
+function TaskList({ tasks, handleRemove, handleUpdate }) {
   return (
     <div className="task-list">
       {tasks.length > 0 ? (
         tasks.map((task, index) => (
-          <Task task={task} key={index} handleRemove={handleRemove} />
+          <Task
+            task={task}
+            key={index}
+            handleRemove={handleRemove}
+            handleUpdate={handleUpdate}
+          />
         ))
       ) : (
         <p>No Task</p>
@@ -73,31 +90,45 @@ function TaskForm({ handleAdd }) {
   );
 }
 
-function Task({ task, handleRemove }) {
+function Task({ task, handleRemove, handleUpdate }) {
   function formatTimestamp(timestamp) {
-    // Convert seconds to milliseconds
     const milliseconds =
       timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1e6);
-    // Create a new Date object
     const date = new Date(milliseconds);
-    // Get the components of the date
     const month = date.toLocaleString("en-us", { month: "short" });
     const day = date.getDate();
     const year = date.getFullYear();
     const hours = date.getHours() % 12 || 12; // Convert to 12-hour format
     const minutes = ("0" + date.getMinutes()).slice(-2);
     const ampm = date.getHours() >= 12 ? "pm" : "am";
-    // Construct the formatted date string
     const formattedDate = `${month} ${day}, ${year} ${hours}:${minutes} ${ampm}`;
     return formattedDate;
   }
 
   return (
-    <div className="task">
+    <div
+      className="task"
+      style={{
+        backgroundColor: task.is_done
+          ? "rgb(92, 252, 127)"
+          : "rgba(255, 255, 255, 0.651)",
+      }}
+    >
       <p className="text">{task.text}</p>
       <div className="task-actions">
         <p className="time">{formatTimestamp(task.date_added)}</p>
         <FaTrash size={20} onClick={() => handleRemove(task.id)} />
+        {!task.is_done ? (
+          <FaCheck
+            size={20}
+            onClick={() => handleUpdate(task.id, !task.is_done)}
+          />
+        ) : (
+          <FaDotCircle
+            size={20}
+            onClick={() => handleUpdate(task.id, !task.is_done)}
+          />
+        )}
       </div>
     </div>
   );

@@ -120,3 +120,27 @@ export const deleteTask = async (userId, taskId) => {
     console.error("Error deleting task:", error);
   }
 };
+
+export const updateTask = async (userId, taskId, updatedTask) => {
+  try {
+    const userTasksRef = doc(collection(db, "tasks"), userId);
+    const docSnapshot = await getDoc(userTasksRef);
+
+    if (docSnapshot.exists()) {
+      const updatedTasks = docSnapshot.data().tasks.map((task) => {
+        if (task.id === taskId) {
+          return { ...task, ...updatedTask };
+        } else {
+          return task;
+        }
+      });
+
+      await updateDoc(userTasksRef, { tasks: updatedTasks });
+      console.log("Task updated successfully!");
+    } else {
+      console.error("User document not found.");
+    }
+  } catch (error) {
+    console.error("Error updating task:", error);
+  }
+};
