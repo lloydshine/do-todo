@@ -5,6 +5,8 @@ import {
   deleteTask,
 } from "../../firebase/firebase";
 
+import { FaTrash } from "react-icons/fa";
+
 import "./todo.css";
 import Navbar from "../navbar/Navbar";
 
@@ -72,10 +74,31 @@ function TaskForm({ handleAdd }) {
 }
 
 function Task({ task, handleRemove }) {
+  function formatTimestamp(timestamp) {
+    // Convert seconds to milliseconds
+    const milliseconds =
+      timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1e6);
+    // Create a new Date object
+    const date = new Date(milliseconds);
+    // Get the components of the date
+    const month = date.toLocaleString("en-us", { month: "short" });
+    const day = date.getDate();
+    const year = date.getFullYear();
+    const hours = date.getHours() % 12 || 12; // Convert to 12-hour format
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+    const ampm = date.getHours() >= 12 ? "pm" : "am";
+    // Construct the formatted date string
+    const formattedDate = `${month} ${day}, ${year} ${hours}:${minutes} ${ampm}`;
+    return formattedDate;
+  }
+
   return (
-    <div>
-      <p>Task: {task.text}</p>
-      <button onClick={() => handleRemove(task.id)}>Remove</button>
+    <div className="task">
+      <p className="text">{task.text}</p>
+      <div className="task-actions">
+        <p className="time">{formatTimestamp(task.date_added)}</p>
+        <FaTrash size={20} onClick={() => handleRemove(task.id)} />
+      </div>
     </div>
   );
 }

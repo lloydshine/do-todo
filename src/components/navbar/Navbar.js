@@ -8,7 +8,10 @@ export default function Navbar({ user, logout }) {
 
   return (
     <nav className="navbar">
-      <h2>Tasklify</h2>
+      <div className="nav-logo">
+        <img src="/logo.png" alt="logo" />
+        <h2>Tasklify</h2>
+      </div>
       <div>
         <div
           className="nav-prof"

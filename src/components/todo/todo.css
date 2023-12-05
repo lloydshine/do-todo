@@ -1,3 +1,63 @@
 .Todo {
   height: 100vh;
 }
+
+.task-list {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 1rem 0;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.651);
+  padding: 1rem;
+  border-radius: 10px;
+  transition: 0.2s;
+  width: 70%;
+}
+.task svg:hover {
+  cursor: pointer;
+  color: red;
+}
+.task:hover {
+  background-color: rgb(43, 49, 43);
+  color: white;
+}
+.task .task-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.task-form {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+.task-form input {
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 10px 0 0 10px;
+}
+.task-form button {
+  padding: 1rem 2rem;
+  border: none;
+  background-color: black;
+  color: white;
+  border-radius: 0 10px 10px 0;
+}

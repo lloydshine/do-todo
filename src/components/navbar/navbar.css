@@ -4,7 +4,7 @@
   align-items: center;
   background-color: black;
   color: white;
-  padding: 1rem 3rem;
+  padding: 1rem;
 }
 
 .nav-prof {
@@ -25,4 +25,14 @@
   overflow: hidden;
   transition: 0.5s;
   color: black;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-logo img {
+  height: 2.5rem;
 }

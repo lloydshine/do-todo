@@ -13,3 +13,9 @@ html {
 .App {
   background: url("../public/back.svg") no-repeat center bottom / cover;
 }
+
+@media screen and (max-width: 700px) {
+  html {
+    font-size: 11px;
+  }
+}
