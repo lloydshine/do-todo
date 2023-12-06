@@ -6,6 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [user, setUser] = useState(null);
+  console.log(process.env.REACT_APP_FIREBASE);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
