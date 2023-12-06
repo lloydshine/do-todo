@@ -1,15 +1,16 @@
 .Todo {
   height: 100vh;
+  background-color: rgba(0, 0, 0, 0.199);
 }
 
 .task-list {
   /* From https://css.glass */
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.082);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.274);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,22 +21,43 @@
   padding: 1rem 0;
   flex-wrap: wrap;
 }
+.list-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  color: rgba(255, 255, 255, 0.74);
+}
+.list-info div {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.done {
+  height: 20px;
+  width: 20px;
+  background-color: #03943f;
+}
+.not-done {
+  height: 20px;
+  width: 20px;
+  background-color: rgba(24, 26, 27, 0.65);
+}
 
 .task {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.651);
   padding: 1rem;
   border-radius: 10px;
   transition: 0.2s;
   width: 20rem;
-  gap: 3rem;
+  gap: 1rem;
+  color: white;
 }
 .task svg:hover {
   cursor: pointer;
-  color: red;
+  color: rgb(235, 72, 72);
 }
 .task .text {
   white-space: normal;
@@ -67,4 +89,5 @@
   background-color: rgb(0, 0, 0);
   color: white;
   border-radius: 0 10px 10px 0;
+  cursor: pointer;
 }

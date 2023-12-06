@@ -19,7 +19,6 @@ export default function Todo({ user, logout }) {
     toast.success("Added new Task!");
     createTask(user.uid, newTask);
   };
-
   const handleRemove = (taskId) => {
     toast.error("Removed a Task!");
     deleteTask(user.uid, taskId);
@@ -51,20 +50,35 @@ export default function Todo({ user, logout }) {
 
 function TaskList({ tasks, handleRemove, handleUpdate }) {
   return (
-    <div className="task-list">
-      {tasks.length > 0 ? (
-        tasks.map((task, index) => (
-          <Task
-            task={task}
-            key={index}
-            handleRemove={handleRemove}
-            handleUpdate={handleUpdate}
-          />
-        ))
-      ) : (
-        <p>No Task</p>
-      )}
-    </div>
+    <>
+      <div className="list-info">
+        <h2>Tasks({tasks.length})</h2>
+        <div>
+          <div>
+            <p>Done</p>
+            <div className="done"></div>
+          </div>
+          <div>
+            <p>Not Done</p>
+            <div className="not-done"></div>
+          </div>
+        </div>
+      </div>
+      <div className="task-list">
+        {tasks.length > 0 ? (
+          tasks.map((task, index) => (
+            <Task
+              task={task}
+              key={index}
+              handleRemove={handleRemove}
+              handleUpdate={handleUpdate}
+            />
+          ))
+        ) : (
+          <p style={{ fontSize: "2rem" }}>No Task</p>
+        )}
+      </div>
+    </>
   );
 }
 
@@ -109,9 +123,7 @@ function Task({ task, handleRemove, handleUpdate }) {
     <div
       className="task"
       style={{
-        backgroundColor: task.is_done
-          ? "rgb(92, 252, 127)"
-          : "rgba(255, 255, 255, 0.651)",
+        backgroundColor: task.is_done ? "#03943f" : "rgba(24, 26, 27, 0.65)",
       }}
     >
       <p className="text">{task.text}</p>

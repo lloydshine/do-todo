@@ -44,6 +44,7 @@ function Login({ handleSwitch }) {
       <input
         type="email"
         name="email"
+        id="email"
         placeholder="Enter Email"
         onChange={(e) => setEmail(e.target.value)}
       />
@@ -51,6 +52,7 @@ function Login({ handleSwitch }) {
       <input
         type="password"
         name="password"
+        id="password"
         placeholder="Enter Password"
         onChange={(e) => setPassword(e.target.value)}
       />
@@ -79,6 +81,7 @@ function Register({ handleSwitch }) {
       <input
         type="email"
         name="email"
+        id="email"
         placeholder="Enter Email"
         onChange={(e) => setEmail(e.target.value)}
       />
@@ -86,13 +89,15 @@ function Register({ handleSwitch }) {
       <input
         type="password"
         name="password"
+        id="password"
         placeholder="Enter Password"
         onChange={(e) => setPassword(e.target.value)}
       />
-      <label htmlFor="password">Retype Password</label>
+      <label htmlFor="rpassword">Retype Password</label>
       <input
         type="password"
-        name="password"
+        name="rpassword"
+        id="rpassword"
         placeholder="Enter Password"
         onChange={(e) => setRetypePassword(e.target.value)}
       />

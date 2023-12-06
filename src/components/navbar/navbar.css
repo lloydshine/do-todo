@@ -25,8 +25,17 @@
   overflow: hidden;
   transition: 0.5s;
   color: black;
+  border-radius: 10px;
 }
-
+.navbar .nav-drop p {
+  padding: 5px;
+  transition: 0.3s;
+  text-align: center;
+}
+.navbar .nav-drop p:hover {
+  background-color: red;
+  color: white;
+}
 .nav-logo {
   display: flex;
   align-items: center;

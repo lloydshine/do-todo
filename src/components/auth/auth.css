@@ -50,6 +50,7 @@
 .auth .form input[type="button"] {
   background-color: black;
   color: white;
+  cursor: pointer;
 }
 
 .auth .form h2 {
