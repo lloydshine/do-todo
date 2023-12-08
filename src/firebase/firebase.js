@@ -129,7 +129,11 @@ export const updateTask = async (userId, taskId, updatedTask) => {
     if (docSnapshot.exists()) {
       const updatedTasks = docSnapshot.data().tasks.map((task) => {
         if (task.id === taskId) {
-          return { ...task, ...updatedTask };
+          return {
+            ...task,
+            ...updatedTask,
+            date_done: updatedTask.is_done ? Timestamp.now() : null,
+          };
         } else {
           return task;
         }

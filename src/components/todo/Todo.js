@@ -11,6 +11,7 @@ import { FaTrash, FaCheck, FaDotCircle } from "react-icons/fa";
 
 import "./todo.css";
 import Navbar from "../navbar/Navbar";
+import Statistics from "../statistics/Statistics";
 
 export default function Todo({ user, logout }) {
   const [tasks, setTasks] = useState([]);
@@ -44,6 +45,7 @@ export default function Todo({ user, logout }) {
         handleRemove={handleRemove}
         handleUpdate={handleUpdate}
       />
+      <Statistics tasks={tasks} />
     </div>
   );
 }
@@ -125,6 +127,7 @@ function Task({ task, handleRemove, handleUpdate }) {
       style={{
         backgroundColor: task.is_done ? "#03943f" : "rgba(24, 26, 27, 0.65)",
       }}
+      draggable
     >
       <p className="text">{task.text}</p>
       <div className="task-actions">
