@@ -41,7 +41,6 @@ const App = () => {
             <Auth setUser={setUser} />
           )}
           <Toaster position="bottom-right" reverseOrder={false} />
-          <Splash />
         </div>
       )}
     </>
