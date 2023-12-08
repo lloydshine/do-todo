@@ -145,6 +145,9 @@ function Task({ task, handleRemove, handleUpdate }) {
           />
         )}
       </div>
+      {task.is_done && (
+        <p className="time">Done: {formatTimestamp(task.date_done)}</p>
+      )}
     </div>
   );
 }
