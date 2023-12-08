@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Todo, Auth } from "./components";
+import { Todo, Auth, Splash } from "./components";
 import { auth } from "./firebase/firebase";
 
 import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [user, setUser] = useState(null);
-  console.log(process.env.REACT_APP_FIREBASE);
+  const [splash, setSplash] = useState(true);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -14,6 +14,7 @@ const App = () => {
         toast.success("Signed In");
       }
       setUser(user);
+      setSplash(false);
     });
     // Cleanup the subscription when the component unmounts
     return () => unsubscribe();
@@ -29,10 +30,21 @@ const App = () => {
   };
 
   return (
-    <div className="App">
-      {user ? <Todo user={user} logout={logout} /> : <Auth setUser={setUser} />}
-      <Toaster position="bottom-right" reverseOrder={false} />
-    </div>
+    <>
+      {splash ? (
+        <Splash />
+      ) : (
+        <div className="App">
+          {user ? (
+            <Todo user={user} logout={logout} />
+          ) : (
+            <Auth setUser={setUser} />
+          )}
+          <Toaster position="bottom-right" reverseOrder={false} />
+          <Splash />
+        </div>
+      )}
+    </>
   );
 };
 

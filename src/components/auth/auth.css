@@ -48,7 +48,7 @@
 }
 
 .auth .form input[type="button"] {
-  background-color: black;
+  background-color: rgb(29, 26, 26);
   color: white;
   cursor: pointer;
 }
