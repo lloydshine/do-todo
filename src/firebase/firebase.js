@@ -121,6 +121,26 @@ export const deleteTask = async (userId, taskId) => {
   }
 };
 
+export const updateTaskOrder = async (userId, updatedTasks) => {
+  if (!userId) {
+    console.error("userId is empty or undefined.");
+    return;
+  }
+  try {
+    const userTasksRef = doc(collection(db, "tasks"), userId);
+    const docSnapshot = await getDoc(userTasksRef);
+
+    if (docSnapshot.exists()) {
+      await updateDoc(userTasksRef, { tasks: updatedTasks });
+      console.log("Task updated successfully!");
+    } else {
+      console.error("User document not found.");
+    }
+  } catch (error) {
+    console.error("Error updating task:", error);
+  }
+};
+
 export const updateTask = async (userId, taskId, updatedTask) => {
   try {
     const userTasksRef = doc(collection(db, "tasks"), userId);

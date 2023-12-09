@@ -4,10 +4,20 @@ import {
   createTask,
   deleteTask,
   updateTask,
+  updateTaskOrder,
 } from "../../firebase/firebase";
 import toast from "react-hot-toast";
 
-import { FaTrash, FaCheck, FaDotCircle } from "react-icons/fa";
+import {
+  FaTrash,
+  FaCheck,
+  FaDotCircle,
+  FaHandMiddleFinger,
+} from "react-icons/fa";
+
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { arrayMove, SortableContext, useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 import "./todo.css";
 import Navbar from "../navbar/Navbar";
@@ -28,7 +38,9 @@ export default function Todo({ user, logout }) {
     toast.success("Updated a Tasks!");
     updateTask(user.uid, taskId, { is_done: isDone });
   };
-
+  const handleUpdateOrder = (newOrder) => {
+    updateTaskOrder(user.uid, newOrder);
+  };
   useEffect(() => {
     if (user.uid) {
       const unsubscribe = onTasksSnapshot(user.uid, setTasks);
@@ -44,15 +56,29 @@ export default function Todo({ user, logout }) {
         tasks={tasks}
         handleRemove={handleRemove}
         handleUpdate={handleUpdate}
+        handleUpdateOrder={handleUpdateOrder}
       />
       <Statistics tasks={tasks} />
     </div>
   );
 }
 
-function TaskList({ tasks, handleRemove, handleUpdate }) {
+function TaskList({ tasks, handleRemove, handleUpdate, handleUpdateOrder }) {
+  const handleDragEnd = (e) => {
+    const { active, over } = e;
+
+    if (active.id !== over.id) {
+      const newOrder = arrayMove(
+        tasks,
+        tasks.findIndex((task) => task.id === active.id),
+        tasks.findIndex((task) => task.id === over.id)
+      );
+      console.log(newOrder);
+      handleUpdateOrder(newOrder);
+    }
+  };
   return (
-    <>
+    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <div className="list-info">
         <h2>Tasks({tasks.length})</h2>
         <div>
@@ -67,20 +93,22 @@ function TaskList({ tasks, handleRemove, handleUpdate }) {
         </div>
       </div>
       <div className="task-list">
-        {tasks.length > 0 ? (
-          tasks.map((task, index) => (
-            <Task
-              task={task}
-              key={index}
-              handleRemove={handleRemove}
-              handleUpdate={handleUpdate}
-            />
-          ))
-        ) : (
-          <p style={{ fontSize: "2rem" }}>No Task</p>
-        )}
+        <SortableContext items={tasks}>
+          {tasks.length > 0 ? (
+            tasks.map((task, index) => (
+              <Task
+                task={task}
+                key={index}
+                handleRemove={handleRemove}
+                handleUpdate={handleUpdate}
+              />
+            ))
+          ) : (
+            <p style={{ fontSize: "2rem" }}>No Task</p>
+          )}
+        </SortableContext>
       </div>
-    </>
+    </DndContext>
   );
 }
 
@@ -121,14 +149,20 @@ function Task({ task, handleRemove, handleUpdate }) {
     return formattedDate;
   }
 
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: task.id });
+
   return (
     <div
       className="task"
       style={{
         backgroundColor: task.is_done ? "#03943f" : "rgba(24, 26, 27, 0.65)",
+        transform: CSS.Transform.toString(transform),
+        transition: transition,
       }}
-      draggable
+      ref={setNodeRef}
     >
+      <FaHandMiddleFinger {...attributes} {...listeners} className="handle" />
       <p className="text">{task.text}</p>
       <div className="task-actions">
         <p className="time">{formatTimestamp(task.date_added)}</p>

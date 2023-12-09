@@ -6,7 +6,7 @@ TODO:
 2. Add Task ✓
 3. Delete Task ✓
 4. Mark Task Complete ✓
-5. Edit Task
+5. Edit Task ✓
 6. Task Categories
 7. Task Priority Levels
 8. Due Date Task
@@ -20,5 +20,5 @@ TODO:
 16. Voice Command
 17. Task Time Tracking
 18. Customizable Task Layout
-19. Drag and Drop
+19. Drag and Drop ✓
 20. Share Task to other User

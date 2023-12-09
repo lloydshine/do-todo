@@ -2,7 +2,10 @@
   min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.199);
 }
-
+.handle {
+  position: relative;
+  left: 0;
+}
 .task-list {
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.082);
@@ -43,7 +46,6 @@
   width: 20px;
   background-color: rgba(24, 26, 27, 0.65);
 }
-
 .task {
   display: flex;
   align-items: center;

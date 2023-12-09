@@ -24,17 +24,19 @@ function Progress({ tasks }) {
           max={tasks.length}
         ></progress>
       </div>
-      <div className="total">
-        <p>Total Tasks</p>
-        <h1>{tasks.length}</h1>
-      </div>
-      <div className="comp">
-        <p>Completed</p>
-        <h1>{completedTasks.length}</h1>
-      </div>
-      <div className="uncomp">
-        <p>Uncompleted</p>
-        <h1>{uncompletedTasks}</h1>
+      <div className="s">
+        <div className="total">
+          <p>Total Tasks</p>
+          <h1>{tasks.length}</h1>
+        </div>
+        <div className="comp">
+          <p>Completed</p>
+          <h1>{completedTasks.length}</h1>
+        </div>
+        <div className="uncomp">
+          <p>Uncompleted</p>
+          <h1>{uncompletedTasks}</h1>
+        </div>
       </div>
     </div>
   );
