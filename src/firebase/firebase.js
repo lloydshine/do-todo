@@ -78,7 +78,7 @@ export const onTasksSnapshot = (userId, setTasks) => {
   return unsubscribe;
 };
 
-export const createTask = async (userId, task) => {
+export const createTask = async (userId, task, category, isImportant) => {
   try {
     const userTasksRef = doc(collection(db, "tasks"), userId);
     const docSnapshot = await getDoc(userTasksRef);
@@ -88,10 +88,12 @@ export const createTask = async (userId, task) => {
       is_done: false,
       date_added: Timestamp.now(),
       date_done: null,
+      category: category,
+      is_important: isImportant,
     };
     if (docSnapshot.exists()) {
       await updateDoc(userTasksRef, {
-        tasks: [...docSnapshot.data().tasks, newTask],
+        tasks: [newTask, ...docSnapshot.data().tasks],
       });
     } else {
       await setDoc(userTasksRef, { tasks: [newTask] });

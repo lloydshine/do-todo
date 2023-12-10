@@ -2,20 +2,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(29, 26, 26);
-  color: white;
   padding: 1rem;
+  transition: 0.3s;
 }
 
 .nav-prof {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8rem;
   cursor: pointer;
   transition: 0.3s;
-}
-.nav-prof:hover {
-  color: red;
 }
 .navbar .nav-drop {
   position: absolute;
