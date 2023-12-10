@@ -8,12 +8,7 @@ import {
 } from "../../firebase/firebase";
 import toast from "react-hot-toast";
 
-import {
-  FaTrash,
-  FaCheck,
-  FaDotCircle,
-  FaHandMiddleFinger,
-} from "react-icons/fa";
+import { FaTrash, FaCheck, FaDotCircle, FaPlusSquare } from "react-icons/fa";
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arrayMove, SortableContext, useSortable } from "@dnd-kit/sortable";
@@ -25,10 +20,11 @@ import Statistics from "../statistics/Statistics";
 
 export default function Todo({ user, logout }) {
   const [tasks, setTasks] = useState([]);
+  const [open, setOpen] = useState(false);
 
-  const handleAdd = (newTask) => {
+  const handleAdd = (newTask, category, isImportant) => {
     toast.success("Added new Task!");
-    createTask(user.uid, newTask);
+    createTask(user.uid, newTask, category, isImportant);
   };
   const handleRemove = (taskId) => {
     toast.error("Removed a Task!");
@@ -51,19 +47,26 @@ export default function Todo({ user, logout }) {
   return (
     <div className="Todo">
       <Navbar user={user} logout={logout} />
-      <TaskForm handleAdd={handleAdd} />
       <TaskList
         tasks={tasks}
         handleRemove={handleRemove}
         handleUpdate={handleUpdate}
         handleUpdateOrder={handleUpdateOrder}
+        setOpen={setOpen}
       />
       <Statistics tasks={tasks} />
+      {open && <TaskForm handleAdd={handleAdd} setOpen={setOpen} />}
     </div>
   );
 }
 
-function TaskList({ tasks, handleRemove, handleUpdate, handleUpdateOrder }) {
+function TaskList({
+  tasks,
+  handleRemove,
+  handleUpdate,
+  handleUpdateOrder,
+  setOpen,
+}) {
   const handleDragEnd = (e) => {
     const { active, over } = e;
 
@@ -80,7 +83,10 @@ function TaskList({ tasks, handleRemove, handleUpdate, handleUpdateOrder }) {
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <div className="list-info">
-        <h2>Tasks({tasks.length})</h2>
+        <div>
+          <h2>Tasks({tasks.length})</h2>
+          <FaPlusSquare size={30} onClick={() => setOpen(true)} />
+        </div>
         <div>
           <div>
             <p>Done</p>
@@ -112,24 +118,57 @@ function TaskList({ tasks, handleRemove, handleUpdate, handleUpdateOrder }) {
   );
 }
 
-function TaskForm({ handleAdd }) {
+function TaskForm({ handleAdd, setOpen }) {
   const [newTask, setNewtask] = useState("");
+  const [category, setCategory] = useState("work");
+  const [isImportant, setIsImportant] = useState(false);
 
   const addTask = () => {
     if (newTask.length <= 3) return;
-    handleAdd(newTask);
+    handleAdd(newTask, category, isImportant);
     setNewtask("");
+    setOpen(false);
   };
 
   return (
-    <div className="task-form">
-      <input
-        type="text"
-        placeholder="Enter Task"
-        onChange={(e) => setNewtask(e.target.value)}
-        value={newTask}
-      />
-      <button onClick={addTask}>Add</button>
+    <div className="modal">
+      <div className="task-form">
+        <label htmlFor="text">Task:</label>
+        <input
+          type="text"
+          placeholder="Enter Task"
+          onChange={(e) => setNewtask(e.target.value)}
+          value={newTask}
+          id="task"
+          name="task"
+        />
+        <label htmlFor="category">Category</label>
+        <select
+          name="category"
+          id="category"
+          onChange={(e) => setCategory(e.target.value)}
+          value={category}
+        >
+          <option value="work">Work</option>
+          <option value="school">School</option>
+          <option value="chores">Chores</option>
+          <option value="others">Others</option>
+        </select>
+        <div className="check">
+          <input
+            type="checkbox"
+            id="importantCheckbox"
+            name="importantCheckbox"
+            checked={isImportant}
+            onChange={() => setIsImportant(!isImportant)}
+          />
+          <label htmlFor="importantCheckbox">Mark as important</label>
+        </div>
+        <div className="form-buttons">
+          <button onClick={addTask}>Add</button>
+          <button onClick={() => setOpen(false)}>Cancel</button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -156,32 +195,42 @@ function Task({ task, handleRemove, handleUpdate }) {
     <div
       className="task"
       style={{
-        backgroundColor: task.is_done ? "#03943f" : "rgba(24, 26, 27, 0.65)",
+        backgroundColor: task.is_done ? "#03c252e0" : "rgba(24, 26, 27, 0.65)",
         transform: CSS.Transform.toString(transform),
         transition: transition,
       }}
       ref={setNodeRef}
     >
-      <FaHandMiddleFinger {...attributes} {...listeners} className="handle" />
-      <p className="text">{task.text}</p>
-      <div className="task-actions">
-        <p className="time">{formatTimestamp(task.date_added)}</p>
-        <FaTrash size={20} onClick={() => handleRemove(task.id)} />
-        {!task.is_done ? (
-          <FaCheck
-            size={20}
-            onClick={() => handleUpdate(task.id, !task.is_done)}
-          />
-        ) : (
-          <FaDotCircle
-            size={20}
-            onClick={() => handleUpdate(task.id, !task.is_done)}
-          />
+      <div className="task-cat">
+        <div className={`cat ${task.category}`}>
+          <p>{task.category}</p>
+        </div>
+        {task.is_important && (
+          <div className="cat important">
+            <p>important</p>
+          </div>
         )}
       </div>
-      {task.is_done && (
-        <p className="time">Done: {formatTimestamp(task.date_done)}</p>
-      )}
+      <p className="text">{task.text}</p>
+      <div className="task-actions">
+        <p className="time" {...attributes} {...listeners}>
+          {formatTimestamp(task.date_added)}
+        </p>
+        <div>
+          <FaTrash size={20} onClick={() => handleRemove(task.id)} />
+          {!task.is_done ? (
+            <FaCheck
+              size={20}
+              onClick={() => handleUpdate(task.id, !task.is_done)}
+            />
+          ) : (
+            <FaDotCircle
+              size={20}
+              onClick={() => handleUpdate(task.id, !task.is_done)}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
