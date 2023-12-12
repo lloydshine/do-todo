@@ -10,9 +10,9 @@ TODO:
 6. Task Categories ✓
 7. Task Priority Levels ✓
 8. Due Date Task
-9. Task Sorting
+9. Task Sorting ✓
 10. Task Reminder
-11. Dark Mode / Light Mode
+11. Dark Mode / Light Mode ✓
 12. Multiple Language Support
 13. Archived Completed Tasks
 14. Task Completion Statictics ✓

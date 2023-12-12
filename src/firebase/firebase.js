@@ -43,7 +43,7 @@ export const loginWithEmailAndPassword = async (email, password) => {
     const user = userCredential.user;
     console.log("User logged in successfully:", user.uid);
   } catch (error) {
-    console.error("Error logging in:", error.message);
+    alert("Error logging in:", error.message);
   }
 };
 
@@ -58,7 +58,7 @@ export const registerWithEmailAndPassword = async (email, password) => {
     console.log("User registered successfully:", user.uid);
     return user;
   } catch (error) {
-    console.error("Error registering user:", error.message);
+    alert("Error registering user:", error.message);
   }
 };
 

@@ -67,6 +67,26 @@ function TaskList({
   handleUpdateOrder,
   setOpen,
 }) {
+  const [options, setOptions] = useState([
+    "work",
+    "chores",
+    "school",
+    "others",
+  ]);
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    if (checked) {
+      setOptions((prevOptions) => [...prevOptions, name]);
+    } else {
+      setOptions((prevOptions) =>
+        prevOptions.filter((option) => option !== name)
+      );
+    }
+  };
+
+  const optTasks = tasks.filter((task) => options.includes(task.category));
+
   const handleDragEnd = (e) => {
     const { active, over } = e;
 
@@ -99,9 +119,9 @@ function TaskList({
         </div>
       </div>
       <div className="task-list">
-        <SortableContext items={tasks}>
-          {tasks.length > 0 ? (
-            tasks.map((task, index) => (
+        <SortableContext items={optTasks}>
+          {optTasks.length > 0 ? (
+            optTasks.map((task, index) => (
               <Task
                 task={task}
                 key={index}
@@ -113,6 +133,50 @@ function TaskList({
             <p style={{ fontSize: "2rem" }}>No Task</p>
           )}
         </SortableContext>
+      </div>
+      <div className="list-sort">
+        <div className="check">
+          <div className="check-opt">
+            <input
+              type="checkbox"
+              id="work"
+              name="work"
+              checked={options.includes("work")}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="work">Work</label>
+          </div>
+          <div className="check-opt">
+            <input
+              type="checkbox"
+              id="chores"
+              name="chores"
+              checked={options.includes("chores")}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="chores">Chores</label>
+          </div>
+          <div className="check-opt">
+            <input
+              type="checkbox"
+              id="school"
+              name="school"
+              checked={options.includes("school")}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="school">School</label>
+          </div>
+          <div className="check-opt">
+            <input
+              type="checkbox"
+              id="others"
+              name="others"
+              checked={options.includes("others")}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="others">Others</label>
+          </div>
+        </div>
       </div>
     </DndContext>
   );
