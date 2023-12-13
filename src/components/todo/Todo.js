@@ -218,6 +218,8 @@ function TaskForm({ handleAdd, setOpen }) {
           <option value="chores">Chores</option>
           <option value="others">Others</option>
         </select>
+        <label htmlFor="date">Due Date</label>
+        <input type="date" name="date" id="date" />
         <div className="check">
           <input
             type="checkbox"

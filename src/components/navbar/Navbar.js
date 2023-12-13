@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./navbar.css";
 
 import { FaCaretDown, FaUser, FaMoon, FaSun } from "react-icons/fa";
@@ -7,14 +7,12 @@ export default function Navbar({ user, logout }) {
   const [clicked, setClicked] = useState(false);
   const [isDark, setIsDark] = useState(true);
 
+  useEffect(() => {
+    document.body.setAttribute("data-theme", isDark ? "dark" : "light");
+  }, [isDark]);
+
   return (
-    <nav
-      className="navbar"
-      style={{
-        backgroundColor: isDark ? "rgb(29, 26, 26)" : "white",
-        color: isDark ? "white" : "black",
-      }}
-    >
+    <nav className="navbar">
       <div className="nav-logo">
         <img src="/logo.png" alt="logo" />
         <h2>Tasklify</h2>

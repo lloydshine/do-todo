@@ -1,6 +1,7 @@
 .stats {
-  background-color: rgb(26, 26, 26);
+  background-color: var(--background);
   padding: 3rem;
+  color: var(--text-primary);
 }
 .s {
   display: flex;
@@ -18,15 +19,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white;
   flex-wrap: wrap;
 }
 .comp {
-  color: #07ff6e;
+  color: #07ff6e !important;
 }
 .uncomp {
-  color: rgb(161, 161, 161);
+  color: rgb(161, 161, 161) !important;
 }
 .total {
-  color: rgb(255, 174, 0);
+  color: rgb(255, 174, 0) !important;
 }
