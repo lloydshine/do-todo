@@ -3,7 +3,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 
 import { FaStop, FaMicrophoneAlt } from "react-icons/fa";
-import { auth, createTask } from "../../firebase/firebase";
+import { auth } from "../../firebase/firebase";
 
 function extractInformation(inputString) {
   const match = inputString.match(/(.+?)\s(\w+)\s(\w+)$/);
@@ -53,6 +53,7 @@ export default function Voice({ handleAdd }) {
       default:
         console.log("Command not Found");
     }
+    resetTranscript();
   };
 
   if (!browserSupportsSpeechRecognition) {
