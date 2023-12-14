@@ -8,7 +8,13 @@ import {
 } from "../../firebase/firebase";
 import toast from "react-hot-toast";
 
-import { FaTrash, FaCheck, FaDotCircle, FaPlusSquare } from "react-icons/fa";
+import {
+  FaTrash,
+  FaCheck,
+  FaDotCircle,
+  FaPlusSquare,
+  FaMicrophone,
+} from "react-icons/fa";
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arrayMove, SortableContext, useSortable } from "@dnd-kit/sortable";
@@ -17,6 +23,7 @@ import { CSS } from "@dnd-kit/utilities";
 import "./todo.css";
 import Navbar from "../navbar/Navbar";
 import Statistics from "../statistics/Statistics";
+import Voice from "../voice/Voice";
 
 export default function Todo({ user, logout }) {
   const [tasks, setTasks] = useState([]);
@@ -49,6 +56,7 @@ export default function Todo({ user, logout }) {
       <Navbar user={user} logout={logout} />
       <TaskList
         tasks={tasks}
+        handleAdd={handleAdd}
         handleRemove={handleRemove}
         handleUpdate={handleUpdate}
         handleUpdateOrder={handleUpdateOrder}
@@ -62,6 +70,7 @@ export default function Todo({ user, logout }) {
 
 function TaskList({
   tasks,
+  handleAdd,
   handleRemove,
   handleUpdate,
   handleUpdateOrder,
@@ -106,6 +115,7 @@ function TaskList({
         <div>
           <h2>Tasks({tasks.length})</h2>
           <FaPlusSquare size={30} onClick={() => setOpen(true)} />
+          <Voice handleAdd={handleAdd} />
         </div>
         <div>
           <div>
