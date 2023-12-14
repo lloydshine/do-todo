@@ -14,7 +14,7 @@ TODO:
 10. Task Reminder
 11. Dark Mode / Light Mode ✓
 12. Multiple Language Support
-13. Archived Completed Tasks
+13. Archived Completed Tasks ✓
 14. Task Completion Statictics ✓
 15. Bulk Task Actions
 16. Voice Command

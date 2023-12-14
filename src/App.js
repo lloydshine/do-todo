@@ -3,6 +3,7 @@ import { Todo, Auth, Splash } from "./components";
 import { auth } from "./firebase/firebase";
 
 import toast, { Toaster } from "react-hot-toast";
+import Footer from "./components/footer/Footer";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -41,6 +42,7 @@ const App = () => {
             <Auth setUser={setUser} />
           )}
           <Toaster position="bottom-right" reverseOrder={false} />
+          <Footer />
         </div>
       )}
     </>
