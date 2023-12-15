@@ -8,7 +8,13 @@ import {
 } from "../../firebase/firebase";
 import toast from "react-hot-toast";
 
-import { FaTrash, FaCheck, FaDotCircle, FaPlusSquare } from "react-icons/fa";
+import {
+  FaTrash,
+  FaCheck,
+  FaDotCircle,
+  FaPlusSquare,
+  FaMicrophone,
+} from "react-icons/fa";
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arrayMove, SortableContext, useSortable } from "@dnd-kit/sortable";
