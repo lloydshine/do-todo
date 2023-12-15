@@ -1,6 +1,6 @@
 .stats {
   background-color: var(--background);
-  padding: 3rem;
+  padding: 3rem 0;
   color: var(--text-primary);
 }
 .s {
