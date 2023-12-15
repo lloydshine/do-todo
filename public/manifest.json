@@ -1,6 +1,6 @@
 {
-  "short_name": "Linote",
-  "name": "Create Linote Sample",
+  "short_name": "Tasklify",
+  "name": "Create Tasklify Sample",
   "icons": [
     {
       "src": "android/android-launchericon-512-512.png",
