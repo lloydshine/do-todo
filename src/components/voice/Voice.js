@@ -25,12 +25,8 @@ const logout = async () => {
 };
 
 export default function Voice({ handleAdd }) {
-  const {
-    transcript,
-    listening,
-    resetTranscript,
-    browserSupportsSpeechRecognition,
-  } = useSpeechRecognition();
+  const { transcript, listening, browserSupportsSpeechRecognition } =
+    useSpeechRecognition();
 
   const command = () => {
     const commands = transcript.split(/(?<=^\S+)\s/);
@@ -53,7 +49,6 @@ export default function Voice({ handleAdd }) {
       default:
         console.log("Command not Found");
     }
-    resetTranscript();
   };
 
   if (!browserSupportsSpeechRecognition) {

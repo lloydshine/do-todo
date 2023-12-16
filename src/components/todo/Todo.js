@@ -41,7 +41,7 @@ export default function Todo({ user, logout }) {
   useEffect(() => {
     if (user.uid) {
       const unsubscribe = onTasksSnapshot(user.uid, setTasks);
-      return () => unsubscribe(); // Cleanup function to unsubscribe from the snapshot listener
+      return () => unsubscribe(); // Cleanup function to unsubscribe from the snapshot listeners
     }
   }, [user.uid]);
 

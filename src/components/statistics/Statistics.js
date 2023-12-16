@@ -63,7 +63,7 @@ function Archive({ tasks }) {
         </thead>
         <tbody>
           {completedTasks.map((task) => (
-            <tr key={task.id}>
+            <tr>
               <td>{task.text}</td>
               <td>{formatTimestamp(task.date_added)}</td>
               <td>{formatTimestamp(task.date_done)}</td>
