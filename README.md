@@ -17,7 +17,7 @@ TODO:
 13. Archived Completed Tasks ✓
 14. Task Completion Statictics ✓
 15. Bulk Task Actions
-16. Voice Command ✓
+16. Voice Command
 17. Task Time Tracking ✓
 18. Customizable Task Layout
 19. Drag and Drop ✓
