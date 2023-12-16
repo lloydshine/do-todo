@@ -3,7 +3,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 
 import { FaStop, FaMicrophoneAlt } from "react-icons/fa";
-import { auth } from "../../firebase/firebase";
+import { auth, createTask } from "../../firebase/firebase";
 
 function extractInformation(inputString) {
   const match = inputString.match(/(.+?)\s(\w+)\s(\w+)$/);
